@@ -1,0 +1,64 @@
+name: Merge to Stable
+
+on:
+  push:
+    branches:
+      - 'stable'
+
+env:
+  NODE_VERSION: '20.x'
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/stable'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: ${{ env.NODE_VERSION }}
+    #   - name: Enable Corepack
+    #     run: corepack enable
+    #     shell: bash
+    #   - name: Set yarn version
+    #     run: yarn set version 4.1.0
+    #     shell: bash
+    #   - name: Install Dependencies
+    #     run: yarn install --immutable
+    #     shell: bash
+      - name: Install Dependencies
+        run: npm ci
+      - name: Semantic Release
+        id: semantic-release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  rebase-main:
+    runs-on: ubuntu-latest
+    needs: create-release
+    steps:
+      - name: Checkout all branches
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout main branch
+        run: git checkout main
+        shell: bash
+      - name: Rebase main from stable
+        run: |
+          git fetch origin
+          git rebase origin/stable
+        shell: bash
+      - name: Push changes
+        run: |
+          git push origin main
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

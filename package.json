@@ -1,0 +1,24 @@
+{
+    "name": "test-release-poc",
+    "author": {
+        "name": "Anand"
+    },
+    "engines": {
+        "node": "v20.x"
+    },
+    "version": "1.5.0",
+    "private": true,
+    "packageManager": "yarn@4.1.0",
+    "scripts": {
+        "start": "node src/index.mjs"
+    },
+    "devDependencies": {
+        "@semantic-release/changelog": "^6.0.3",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "^10.3.0",
+        "@semantic-release/npm": "^12.0.1",
+        "@semantic-release/release-notes-generator": "^14.0.1",
+        "conventional-changelog-conventionalcommits": "^8.0.0",
+        "semantic-release": "^24.0.0"
+    }
+}
