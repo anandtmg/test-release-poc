@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/anandtmg/test-release-poc/compare/v1.0.0...v1.1.0) (2024-10-11)
+
+
+### Features
+
+* add feature 1 ([#1](https://github.com/anandtmg/test-release-poc/issues/1)) ([bbddfe6](https://github.com/anandtmg/test-release-poc/commit/bbddfe67cd73f2cca5e323a85df5a2efc12fe280))
+
 # 1.0.0 (2024-10-11)
 
 
